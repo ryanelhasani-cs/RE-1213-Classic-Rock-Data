@@ -1,7 +1,8 @@
 import csv
-from pathlib import Path # The CSV is in a parent folder in the folder, so I need a oath to access it 
+from pathlib import Path
+from data import load_songs
 
-csv_folder_path = Path(__file__).parent.parent # "UltimateClassicRock.csv" I shared the path so that all version files would have access,  csv is in a higher folder
+csv_folder_path = Path(__file__).parent # "UltimateClassicRock.csv" I shared the path so that all version files would have access,  csv is in a higher folder
 csv_path = csv_folder_path / "UltimateClassicRock.csv"
 
 def find_decade_average():
@@ -12,6 +13,13 @@ def find_decade_average():
     Average needs to be relative to score, so like absolute value of (song_score - average) / average?
 
     '''
+    songs = load_songs()
+
+    for song in songs:
+        year = int(song["Year"])
+        decade = (year // 10) * 10
+        
+    
 
 def compare_song_decade():
     ''' Compares the song to the decade
