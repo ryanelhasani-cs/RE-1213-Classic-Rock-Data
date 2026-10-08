@@ -23,4 +23,4 @@ def main():
     print(f"The best guess for the decade of the song is: {best_guess_decade}")
 
 if __name__ == "__main__":
-    main
+    main()

@@ -23,8 +23,8 @@ def transform_song_data(row: dict[str]):
     ''' Convert CSV row into useable data 
     '''
     song = row.copy()
-    minutes, seconds = song["Durations"].split(":")
-    song["Durations"] = int(minutes) * 60 + int(seconds)
+    minutes, seconds = song["Duration"].split(":")
+    song["Duration"] = int(minutes) * 60 + int(seconds)
 
     for category in ("Year", "Key", "Mode", "Time_Signature"):
         song[category] = int(song[category])

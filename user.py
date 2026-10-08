@@ -2,8 +2,16 @@ from random import sample
 from data import load_songs
 
 
-def get_user_input():
-    '''Get a song by title, offering random choices after three failed tries.'''
+def get_user_input() -> dict[str, dict[str, int|float]]:
+    '''Get a song by title, offering random choices after three failed tries.
+    
+    Args:
+        None
+
+    Returns:
+        dict[str, dict[str, int|float]: The return dictionary takes the users chosen song, each of its categoires (keys), and its scores    
+    '''
+
     songs = load_songs()
     # if not songs:
     #     raise ValueError("No songs are available to choose from.")
@@ -22,8 +30,8 @@ def get_user_input():
 
     while True:
         choice = input("Choose a song by number (1-5): ").strip()
-        if choice.isdigit() and choice in [1, 2, 3, 4, 5]:
-            return rand_choice[int(choice) - 1]
-        print(f"Please enter a number from 1 to 5.")
+        if choice.isdigit() and int(choice) in [1, 2, 3, 4, 5]:
+            return rand_choices[int(choice) - 1]
+        print("Please enter a number from 1 to 5.")
 
     
