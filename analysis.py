@@ -14,6 +14,7 @@ def find_decade_average():
 
     '''
     decade_average_dict = {}
+    songs_per_decade = {}
     
     songs = load_songs()
 
@@ -21,9 +22,20 @@ def find_decade_average():
         year = song["Year"]
         decade = (year // 10) * 10
         decade_average_dict.setdefault(decade, {})
+        songs_per_decade.setdefault(decade, 0)
+        songs_per_decade[decade] += 1
 
         for category in ("Danceability", "Energy", "Loudness", "Speechiness", "Acousticness", "Instrumentalness", "Liveness", "Valence", "Tempo"):
             decade_average_dict[decade][category] = decade_average_dict[decade].get(category, 0) + song[category]
+
+        for category in ("Key", "Mode", "Time_Signature"): # might need to make this different, average might not work.
+            decade_average_dict[decade][category] = decade_average_dict[decade].get(category, 0) + song[category]
+
+    for decade in decade_average_dict:
+        for category in decade_average_dict[decade]:
+            decade_average_dict[decade][category] /= songs_per_decade[decade]
+
+    return decade_average_dict
 
 
         
