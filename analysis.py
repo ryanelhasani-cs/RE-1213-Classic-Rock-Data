@@ -13,11 +13,19 @@ def find_decade_average():
     Average needs to be relative to score, so like absolute value of (song_score - average) / average?
 
     '''
+    decade_average_dict = {}
+    
     songs = load_songs()
 
     for song in songs:
-        year = int(song["Year"])
+        year = song["Year"]
         decade = (year // 10) * 10
+        decade_average_dict.setdefault(decade, {})
+
+        for category in ("Danceability", "Energy", "Loudness", "Speechiness", "Acousticness", "Instrumentalness", "Liveness", "Valence", "Tempo"):
+            decade_average_dict[decade][category] = decade_average_dict[decade].get(category, 0) + song[category]
+
+
         
     
 

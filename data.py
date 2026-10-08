@@ -19,14 +19,14 @@ csv_path = csv_folder_path / "UltimateClassicRock.csv"
 
 #     '''
 
-def transform_song_data(row):
+def transform_song_data(row: dict[str]):
     ''' Convert CSV row into useable data 
     '''
     song = row.copy()
     minutes, seconds = song["Durations"].split(":")
     song["Durations"] = int(minutes) * 60 + int(seconds)
 
-    for category in ("Year", "Key", "Mode", "Time_Signature")
+    for category in ("Year", "Key", "Mode", "Time_Signature"):
         song[category] = int(song[category])
 
     for category in ("Danceability", "Energy", "Loudness", "Speechiness", "Acousticness", "Instrumentalness", "Liveness", "Valence", "Tempo"):
