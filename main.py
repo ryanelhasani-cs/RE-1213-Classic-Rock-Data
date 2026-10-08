@@ -1,8 +1,8 @@
 import csv
 from pathlib import Path
 
-from data import clean_csv, load_csv, sort_csv  # data.py file with functions
 from analysis import find_decade_average, compare_song_decade  # analysis.py file with functions
+from user import get_user_input  # gets user input for the song
 
 csv_folder_path = Path(__file__).parent # "UltimateClassicRock.csv" I shared the path so that all version files would have access,  csv is in a higher folder
 csv_path = csv_folder_path / "UltimateClassicRock.csv"
@@ -15,5 +15,12 @@ def main():
 
     '''
 
+    user_song = get_user_input()
+    decade_averages = find_decade_average()
+
+    best_guess_decade = compare_song_decade(user_song, decade_averages)
+
+    print(f"The best guess for the decade of the song is: {best_guess_decade}")
+
 if __name__ == "__main__":
-    main()
+    main

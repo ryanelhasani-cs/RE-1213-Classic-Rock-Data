@@ -22,8 +22,8 @@ def get_user_input():
 
     while True:
         choice = input("Choose a song by number (1-5): ").strip()
-        if choice in [1, 2, 3, 4, 5]:
+        if choice.isdigit() and choice in [1, 2, 3, 4, 5]:
             return rand_choice[int(choice) - 1]
-        print(f"Please enter a number from 1 to {len(options)}.")
+        print(f"Please enter a number from 1 to 5.")
 
     
