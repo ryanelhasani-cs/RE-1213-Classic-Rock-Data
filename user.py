@@ -1,8 +1,9 @@
 from random import sample
 from data import load_songs
+from search import linear_search_by_title
 
 
-def get_user_input() -> dict[str, dict[str, int|float]]:
+def get_user_input() -> dict[str, str|int|float]:
     '''Get a song by title, offering random choices after three failed tries.
     
     Args:
@@ -16,11 +17,16 @@ def get_user_input() -> dict[str, dict[str, int|float]]:
     # if not songs:
     #     raise ValueError("No songs are available to choose from.")
 
+
+    # THIS IS LINEAR SEARCH
     for attempt in range(3):
         song_name = input("Enter a song name: ").strip()
-        for song in songs:
-            if song["Track"].lower() == song_name.lower():
-                return song
+
+        song = linear_search_by_title(songs, song_name)
+
+        if song is not None:
+            return song
+
         print("Song not found. Please try again.")
 
     rand_choices = sample(songs, 5)
@@ -33,5 +39,7 @@ def get_user_input() -> dict[str, dict[str, int|float]]:
         if choice.isdigit() and int(choice) in [1, 2, 3, 4, 5]:
             return rand_choices[int(choice) - 1]
         print("Please enter a number from 1 to 5.")
+
+
 
     

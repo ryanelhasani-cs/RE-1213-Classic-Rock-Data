@@ -2,8 +2,17 @@ from data import load_songs
 
 
 
-def slow_insertion_sort(songs, category):
-    '''Sorts the list of songs by title using slow insertion sort'''
+def slow_insertion_sort(songs: list[dict[str, str|int|float]], category: str) -> list[dict[str, str|int|float]]:
+    '''Sorts the list of songs by category using slow insertion sort
+    
+    Args:
+        songs (list[dict[str, str|int|float]]): A list of song dictionaries
+        category (str): The category to sort by
+
+    Returns:
+        list[dict[str, str|int|float]]: The sorted list of song dictionaries
+
+    '''
     for i in range(1, len(songs)):
         current_song = songs[i]
         current_val = current_song[category]
@@ -18,8 +27,17 @@ def slow_insertion_sort(songs, category):
 
     return songs
 
-def better_sort_by_title(songs, category):
-    '''Sorts the list of songs by title using python faster sorted'''
+def better_sort_by_title(songs: list[dict[str, str|int|float]], category: str) -> list[dict[str, str|int|float]]:
+    '''Sorts the list of songs by category using python faster sorted
+    
+    Args:
+        songs (list[dict[str, str|int|float]]): A list of song dictionaries
+        category (str): The category to sort by
+
+    Returns:
+        list[dict[str, str|int|float]]: The sorted list of song dictionaries
+    
+    '''
     return sorted(songs, key=lambda song: song[category])
 
 

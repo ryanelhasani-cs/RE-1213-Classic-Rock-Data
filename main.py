@@ -23,7 +23,7 @@ def main():
 
     best_guess_decade = compare_song_decade(user_song, decade_averages)
 
-    print(f"The best guess for the decade of the song is: {best_guess_decade}")
+    print(f"The best guess for the decade of the {user_song['Track']} is: {best_guess_decade}")
 
     # MOVING ONTO PHASE 3
 

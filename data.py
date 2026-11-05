@@ -19,7 +19,7 @@ csv_path = csv_folder_path / "UltimateClassicRock.csv"
 
 #     '''
 
-def transform_song_data(row: dict[str]):
+def transform_song_data(row: dict[str, str]) -> dict[str, str|int|float]:
     ''' Convert CSV row into useable data
 
     args:
@@ -32,7 +32,7 @@ def transform_song_data(row: dict[str]):
     minutes, seconds = song["Duration"].split(":")
     song["Duration"] = int(minutes) * 60 + int(seconds)
 
-    for category in ("Year", "Key", "Mode", "Time_Signature"):
+    for category in ("Year", "Key", "Mode", "Time_Signature", "Popularity"):
         song[category] = int(song[category])
 
     for category in ("Danceability", "Energy", "Loudness", "Speechiness", "Acousticness", "Instrumentalness", "Liveness", "Valence", "Tempo"):
@@ -41,7 +41,7 @@ def transform_song_data(row: dict[str]):
     return song
 
 
-def load_songs():
+def load_songs() -> list[dict[str, str|int|float]]:
     ''' Loads the csv
 
     This function reads the csv and puts it all into dictionaries. Im unsure if this will exist at all, the find_decade_average() function may be enough?
@@ -54,4 +54,3 @@ def load_songs():
     '''
     with open(csv_path, 'r') as fh:
         return [transform_song_data(row) for row in csv.DictReader(fh)]
-

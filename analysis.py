@@ -5,7 +5,7 @@ from data import load_songs
 csv_folder_path = Path(__file__).parent # "UltimateClassicRock.csv" I shared the path so that all version files would have access,  csv is in a higher folder
 csv_path = csv_folder_path / "UltimateClassicRock.csv"
 
-def find_decade_average() -> dict[int, dict[str, float|int]]:
+def find_decade_average() -> dict[int, dict[str, float]]:
     ''' Find's decade average
 
     This function goes through every song in a decade, averages each of their categories, and returns it as a dictionary
@@ -47,7 +47,7 @@ def find_decade_average() -> dict[int, dict[str, float|int]]:
         
     
 
-def compare_song_decade(user_song: dict, decade_averages: dict) -> int:
+def compare_song_decade(user_song: dict[str, str|int|float], decade_averages: dict[int, dict[str, float]]) -> int:
     ''' Compares the song to the decade
     
     This function will take the averages from find_decade_average() and weigh the categories of the user song against it. It is not just a counter,
