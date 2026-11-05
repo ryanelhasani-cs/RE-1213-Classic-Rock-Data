@@ -20,7 +20,7 @@ def slow_insertion_sort(songs, category):
 
 def better_sort_by_title(songs, category):
     '''Sorts the list of songs by title using python faster sorted'''
-    return sorted(songs, key=lambda song: song[category], reverse=True)
+    return sorted(songs, key=lambda song: song[category])
 
 
 
@@ -30,11 +30,19 @@ sample_songs = songs[:100]  # Take the first 100 songs for sampling
 sorted_sample = slow_insertion_sort(sample_songs, "Danceability")
 
 for index in range(1, len(sorted_sample)):
-    if sorted_sample[index - 1]["Danceability"] < sorted_sample[index]["Danceability"]:
+    if sorted_sample[index - 1]["Danceability"] > sorted_sample[index]["Danceability"]:
         print(f"Songs are sorted wrong at index {index}")
         break
-    print("Songs are sorted correctly")
+print("Songs are sorted correctly")
 
 for song in sorted_sample[:10]:
     print(song["Track"], song["Danceability"])
+
+
+'''
+Tradeoff Justification:
+
+My insertion sort is super slow, its in o(n^2) time, and is just not a great alogrithm in general. my CSV is over 14k entries long, that would take eons. Thats why im only testingit wiht 100 songs.
+Pythons build in sorted is much faster and accurate, so i trust it with all 14k. 
+'''
 
