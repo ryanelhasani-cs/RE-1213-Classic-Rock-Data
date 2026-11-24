@@ -1,45 +1,36 @@
-from random import sample
-from data import load_songs
-from search import linear_search_by_title
+"""Find songs by exact title, partial title, or a similar spelling."""
+from difflib import get_close_matches
 
 
-def get_user_input() -> dict[str, str|int|float]:
-    '''Get a song by title, offering random choices after three failed tries.
-    
-    Args:
-        None
-
-    Returns:
-        dict[str, dict[str, int|float]: The return dictionary takes the users chosen song, each of its categoires (keys), and its scores    
-    '''
-
-    songs = load_songs()
-    # if not songs:
-    #     raise ValueError("No songs are available to choose from.")
-
-
-    # THIS IS LINEAR SEARCH
-    for attempt in range(3):
-        song_name = input("Enter a song name: ").strip()
-
-        song = linear_search_by_title(songs, song_name)
-
-        if song is not None:
-            return song
-
-        print("Song not found. Please try again.")
-
-    rand_choices = sample(songs, 5)
-    print("Here are some songs you can choose from: ")
-    for number, song in enumerate(rand_choices, start=1):
-        print(f"{number}. {song['Track']}")
-
+def get_user_input(songs):
+    titles = songs["Track"].fillna("").astype(str).str.strip().str.casefold()
     while True:
-        choice = input("Choose a song by number (1-5): ").strip()
-        if choice.isdigit() and int(choice) in [1, 2, 3, 4, 5]:
-            return rand_choices[int(choice) - 1]
-        print("Please enter a number from 1 to 5.")
+        query = input("Song title (or q to quit): ").strip().casefold()
+        if query == "q":
+            return None
+        if not query:
+            print("Please enter a title.")
+            continue
 
+        matches = songs[titles == query]
+        if matches.empty:
+            matches = songs[titles.str.contains(query, regex=False)]
+        if matches.empty:
+            suggestions = get_close_matches(query, titles.unique(), n=5, cutoff=0.55)
+            matches = songs[titles.isin(suggestions)]
+            if not matches.empty:
+                print("No exact or partial match. Did you mean:")
+        if matches.empty:
+            print("No matching songs found. Try another search.")
+            continue
 
-
-    
+        matches = matches.head(20)
+        for number, (_, song) in enumerate(matches.iterrows(), 1):
+            print(f"{number}. {song['Track']} — {song['Artist']} ({song['Year']}) — {song['Album']}")
+        if len(matches) == 20:
+            print("Showing up to 20 results; search more specifically to narrow them down.")
+        choice = input("Choose a number, or press Enter to search again: ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(matches):
+            return matches.iloc[int(choice) - 1]
+        if choice:
+            print("Invalid selection. Please search again.")
